@@ -1,8 +1,22 @@
 import './App.css';
 import 'material-icons/iconfont/material-icons.css';
 import { Link } from "react-router-dom";
+import web3 from "./web3";
+import Contract from "./Contract.js";
+import { useEffect } from 'react';
 
 function App() {
+  useEffect(() => {
+    async function getProposalCount() {
+      const accounts = await web3.eth.getAccounts();
+      const organizationCount = await Contract.methods.organizationCount().call();
+
+      console.log("accounts", accounts)
+      console.log("organizationCount", organizationCount)
+    }
+    getProposalCount();
+  }, []);
+  
   return (
     <>
       <div className="App">
