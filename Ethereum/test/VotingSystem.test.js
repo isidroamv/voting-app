@@ -43,7 +43,7 @@ describe('Organization', () => {
 
     // User cannot create a proposal if hasn't been join to the organization
     try {
-      await votingSystem.methods.createPropose(0, 'proposalName', 'desc')
+      await votingSystem.methods.createProposal(0, 'proposalName', 'desc')
         .send({ from: accounts[0], gas: 1000000 });
     } catch (e) {
       assert.ok(e)
@@ -60,7 +60,7 @@ describe('Organization', () => {
     }
 
     // User create a proposal
-    await votingSystem.methods.createPropose(0, 'proposalName', 'desc')
+    await votingSystem.methods.createProposal(0, 'proposalName', 'desc')
       .send({ from: accounts[0], gas: 1000000 });
     const proposal = await votingSystem.methods.getProposal(0, 0).call();
     assert.equal(proposal['0'], 'proposalName');

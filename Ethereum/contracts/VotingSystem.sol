@@ -47,6 +47,11 @@ contract VotingSystem {
         organizations[organizationId].hasJoined[msg.sender] = true;
     }
 
+    // Check if user has joined
+    function hasJoined(uint256 organizationId) public view returns (bool) {
+        return organizations[organizationId].hasJoined[msg.sender];
+    }
+
     // Any user can create an organization
     function createOrganization(string memory name, uint256 sensitivity) public returns (uint256) {
         uint256 organizationId = organizationCount++;
@@ -60,8 +65,12 @@ contract VotingSystem {
         return organizationId;
     }
 
+    function organizationExists(uint organizationId) public view returns (bool) {
+        return organizations[organizationId].creator != address(0x0);
+    }
+
     // A proposal can be created if the member belongs to an organization
-    function createPropose(uint256 organizationId, string memory name, string memory description) public returns (uint256) {
+    function createProposal(uint256 organizationId, string memory name, string memory description) public returns (uint256) {
         require(organizations[organizationId].hasJoined[msg.sender], "Not a member");
 
         uint256 proposalId = organizations[organizationId].proposalCount++;
@@ -93,6 +102,14 @@ contract VotingSystem {
         emit Voted(proposalId, inSupport);
     }
 
+    // Check if user has voted
+    function hasVoted(uint256 organizationId, uint256 proposalId) public view returns (bool) {
+        require(proposalId < organizations[organizationId].proposalCount, "Invalid proposal id");
+        require(organizations[organizationId].hasJoined[msg.sender], "Not a member");
+        Proposal storage p = organizations[organizationId].proposals[proposalId];
+        return p.hasVoted[msg.sender];
+    }
+
     // Function to vertify is the propsal is approved
     function isProposalApproved(uint256 organizationId, uint256 proposalId) public view returns (bool) {
         require(proposalId < organizations[organizationId].proposalCount, "Invalid proposal id");
@@ -114,6 +131,13 @@ contract VotingSystem {
         p.isEnded = true;
 
         emit ProposalEnd(organizationId, proposalId);
+    }
+
+    function hasFinalizePropopsal(uint256 organizationId, uint256 proposalId) public view returns (bool) {
+        require(proposalId < organizations[organizationId].proposalCount, "Invalid proposal id");
+        require(organizations[organizationId].hasJoined[msg.sender], "Not a member");
+        Proposal storage p = organizations[organizationId].proposals[proposalId];
+        return p.isEnded;
     }
 
     // Function to retrieve the proposal

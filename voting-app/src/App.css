@@ -74,6 +74,21 @@ a {
   width: 200px;
   border-radius: 20px;
   cursor: pointer;
+  margin: 20px 10px;
+}
+
+.btn.yes {
+  background: #11bb5b;
+}
+
+.btn.no {
+  background: #f2643e;
+}
+
+.btn-back {
+  position: absolute;
+  margin-left: 30px;
+  left: 0;
 }
 
 .inlineFlex {
@@ -100,4 +115,13 @@ a {
 
 .org .material-icons {
   font-size: 50px;
+}
+
+.blue-button {
+  background: #23a6f0;
+  color: #fff;
+  border: navajowhite;
+  padding: 10px 30px;
+  cursor: pointer;
+  border-radius: 6px;
 }
