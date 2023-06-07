@@ -1,0 +1,1 @@
+This repository contains the code for the Simple Collective Decision Making System on Ethereum. The system is described in the following article: https://medium.com/block-magnates/simple-collective-decision-making-system-on-ethereum-part-1-d45f9a27fe7d
